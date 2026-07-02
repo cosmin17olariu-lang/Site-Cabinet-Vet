@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetCare Sector 3 — Excelență în Îngrijire Veterinară</title>
+    
+    <!-- -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter+Tight:wght@400;500;600&display=swap');
+    </style>
+
+    <!-- -->
+    <style>
+        :root {
+            --primary: #0F4C5C;
+            --primary-light: #166074;
+            --accent: #E36414;
+            --bg-cream: #FAF6F0;
+            --white: #FFFFFF;
+            --text-ink: #1A1F2C;
+            --text-soft: #4A5160;
+            --emergency: #D90429;
+            
+            --font-display: 'Fraunces', serif;
+            --font-body: 'Inter Tight', sans-serif;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-subtle: 0 10px 30px -10px rgba(15, 76, 92, 0.1);
+        }
+
+        /* RESET & BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-body); 
+            background-color: var(--bg-cream); 
+            color: var(--text-ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .display-font { font-family: var(--font-display); font-weight: 700; }
+        a { text-decoration: none; color: inherit; transition: var(--transition-smooth); }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; font-family: var(--font-body); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+        .section-padding { padding: 120px 0; }
+        
+        /* */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(250, 246, 240, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(15, 76, 92, 0.08);
+            height: 90px; display: flex; align-items: center;
+            transition: var(--transition-smooth);
+        }
+
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            width: 100%; 
+        }
+        
+        .logo { 
+            font-family: var(--font-display); 
+            font-size: 1.6rem; 
+            color: var(--primary); 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            flex-shrink: 0;
+            z-index: 1001;
+        }
+        .logo svg { fill: var(--accent); transition: var(--transition-smooth); }
+        .logo:hover svg { transform: rotate(-15px) scale(1.1); }
+
+        /* Meniu de navigare principal - generos ca spatiu */
+        .nav-links { 
+            display: flex; 
+            gap: 40px; 
+            align-items: center; 
+            margin-left: auto; 
+            margin-right: 64px; 
+            transition: var(--transition-smooth);
+        }
+        
+        .nav-links a { 
+            font-size: 1.05rem; 
+            font-weight: 500;
+            color: var(--text-soft);
+            padding: 8px 4px;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 0; height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition-smooth);
+        }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { font-weight: 600; color: var(--primary); }
+
+        .nav-cta { 
+            background: var(--accent); color: white; padding: 14px 28px; 
+            border-radius: 50px; font-weight: 600; font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(227, 100, 20, 0.3);
+            flex-shrink: 0;
+            z-index: 1001;
+            transition: var(--transition-smooth);
+        }
+        .nav-cta:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 25px rgba(227, 100, 20, 0.4); 
+            background: #f7721a;
+        }
+
+        /* Stiluri si interactiune meniu mobil */
+        .mobile-toggle { 
+            display: none; 
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .mobile-toggle svg {
+            stroke: var(--primary);
+            transition: var(--transition-smooth);
+        }
+
+        /* */
+        .hero { 
+            min-height: 100vh; display: grid; align-items: center; 
+            padding-top: 110px; background: radial-gradient(circle at top right, #e8f1f2 0%, #FAF6F0 60%);
+        }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+
+        .eyebrow { 
+            display: flex; align-items: center; gap: 12px; color: var(--primary); 
+            font-weight: 600; font-size: 0.95rem; margin-bottom: 24px; 
+            letter-spacing: 0.5px;
+        }
+        .eyebrow::before { content: ""; width: 35px; height: 1px; background: var(--primary); }
+
+        .hero h1 { font-size: clamp(2.8rem, 5.5vw, 4.2rem); line-height: 1.15; margin-bottom: 28px; color: var(--primary); }
+        .hero p { font-size: 1.25rem; color: var(--text-soft); margin-bottom: 48px; max-width: 520px; }
+
+        .hero-visual { position: relative; }
+        .main-img { 
+            width: 100%; border-radius: 40px 120px 40px 40px; 
+            box-shadow: 25px 25px 70px rgba(15, 76, 92, 0.12);
+            object-fit: cover; aspect-ratio: 1/1; background: #ddd;
+        }
+
+        /* Carduri plutitoare pe Hero */
+        .floating-card {
+            position: absolute; background: white; padding: 18px 24px; border-radius: 24px;
+            box-shadow: var(--shadow-subtle); display: flex; align-items: center; gap: 14px;
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
+        .f-1 { top: 12%; left: -12%; }
+        .f-2 { bottom: 12%; right: -6%; animation-delay: 1.5s; }
+        
+        .status-badge {
+            position: absolute; top: -15px; right: 20px; background: var(--primary); color: white;
+            padding: 10px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 15px rgba(15, 76, 92, 0.2);
+            z-index: 3;
+        }
+        .status-dot { width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+
+        /* */
+        .trust-bar { 
+            background: white; border-top: 1px solid rgba(15, 76, 92, 0.05); 
+            border-bottom: 1px solid rgba(15, 76, 92, 0.05); padding: 50px 0; 
+        }
+        .trust-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 40px; }
+        .trust-item { text-align: center; flex: 1; min-width: 180px; }
+        .trust-item h4 { font-size: 2.4rem; color: var(--primary); margin-bottom: 6px; }
+        .trust-item p { font-size: 0.95rem; color: var(--text-soft); font-weight: 500; }
+
+        /* */
+        .service-card {
+            background: white; padding: 48px; border-radius: 32px; transition: var(--transition-smooth);
+            border: 1px solid transparent; display: flex; flex-direction: column; height: 100%;
+        }
+        .service-card:hover { 
+            transform: translateY(-12px); border-color: var(--primary);
+            box-shadow: 0 25px 50px rgba(15, 76, 92, 0.06);
+        }
+        .service-icon { 
+            width: 64px; height: 64px; background: var(--bg-cream); border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 32px;
+            color: var(--primary); transition: var(--transition-smooth);
+        }
+        .service-card:hover .service-icon { background: var(--primary); color: white; }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 16px; color: var(--primary); }
+        .service-card p { color: var(--text-soft); font-size: 1.05rem; flex-grow: 1; }
+
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+
+        /* ACCORDION FAQ */
+        .faq-list { display: flex; flex-direction: column; gap: 16px; }
+        .faq-item { border-bottom: 1px solid #e0ddd8; padding-bottom: 12px; }
+        .faq-header { 
+            padding: 24px 0; display: flex; justify-content: space-between; align-items: center; 
+            cursor: pointer; font-family: var(--font-display); font-size: 1.3rem; color: var(--primary);
+        }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; color: var(--text-soft); font-size: 1.05rem; }
+        .faq-item.active .faq-content { max-height: 250px; padding-bottom: 24px; }
+        .faq-icon { font-size: 1.5rem; transition: transform 0.4s ease; color: var(--accent); }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        /* */
+        .booking-form {
+            background: var(--primary); color: white; padding: 60px; border-radius: 48px;
+            display: grid; gap: 24px; box-shadow: 0 30px 60px rgba(15, 76, 92, 0.15);
+        }
+        .form-group { display: flex; flex-direction: column; gap: 10px; }
+        .form-group label { font-size: 0.95rem; font-weight: 500; opacity: 0.9; }
+        .form-group input, .form-group select { 
+            padding: 16px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.15); 
+            background: rgba(255, 255, 255, 0.08); color: white; font-family: var(--font-body);
+            font-size: 1rem; transition: var(--transition-smooth);
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none; background: rgba(255, 255, 255, 0.15); border-color: var(--accent);
+        }
+        .form-group input::placeholder { color: rgba(255, 255, 255, 0.5); }
+        .form-group select option { background: var(--primary); color: white; }
+
+        /* URGENTA */
+        .emergency-hero { background: var(--emergency); color: white; padding: 140px 0 100px; text-align: center; }
+        .emergency-hero h1 { font-size: 3.8rem; margin-bottom: 24px; }
+        .phone-pulse {
+            display: inline-flex; align-items: center; gap: 15px; font-size: 2.6rem; font-weight: 700;
+            background: white; color: var(--emergency); padding: 18px 48px; border-radius: 100px;
+            margin-top: 48px; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        /* FOOTER */
+        footer { background: var(--primary); color: white; padding: 100px 0 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 60px; margin-bottom: 80px; }
+        .footer-logo { font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 24px; display: block; color: white; }
+
+        /* SPA Logic */
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 980px) {
+            header { height: 80px; }
+            .mobile-toggle { display: block; }
+            
+            /* Stil modern pentru meniul mobil (drawer) */
+            .nav-links { 
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--bg-cream);
+                flex-direction: column;
+                justify-content: center;
+                gap: 32px;
+                margin: 0;
+                padding: 40px;
+                border-top: 1px solid rgba(15, 76, 92, 0.08);
+                box-shadow: -10px 15px 30px rgba(15, 76, 92, 0.05);
+                z-index: 999;
+            }
+            
+            .nav-links.mobile-open {
+                right: 0;
+            }
+
+            .nav-cta {
+                display: none; /* Ascundem CTA-ul mare pe mobil in header pentru a nu inghesui spatiul */
+            }
+
+            .hero-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+            .hero-visual { order: -1; max-width: 500px; margin: 0 auto; }
+            .eyebrow { justify-content: center; }
+            .hero p { margin: 0 auto 40px; }
+            .trust-grid { justify-content: center; }
+        }
+
+        @media (max-width: 600px) {
+            .section-padding { padding: 80px 0; }
+            .hero h1 { font-size: 2.4rem; }
+            .booking-form { padding: 32px; border-radius: 32px; }
+            .phone-pulse { font-size: 1.8rem; padding: 14px 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- -->
+    <header>
+        <div class="container" style="width: 100%;">
+            <nav>
+                <a href="#" class="logo" onclick="navigateTo('home'); return false;">
+                    <svg width="28" height="28" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    AristiVet
+                </a>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" class="active" onclick="navigateTo('home'); return false;">Acasă</a></li>
+                    <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii</a></li>
+                    <li><a href="#" onclick="navigateTo('echipa'); return false;">Echipa</a></li>
+                    <li><a href="#" onclick="navigateTo('faq'); return false;">Întrebări</a></li>
+                    <li><a href="#" onclick="navigateTo('contact'); return false;">Contact</a></li>
+                    <li><a href="#" onclick="navigateTo('urgenta'); return false;" style="color: var(--emergency); font-weight: 700;">URGENȚE</a></li>
+                </ul>
+
+                <a href="#" class="nav-cta" onclick="navigateTo('programare'); return false;">Programare Rapidă</a>
+                
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Meniu navigare">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="3" y1="12" x2="21" y2="12" id="line1"></line>
+                        <line x1="3" y1="6" x2="21" y2="6" id="line2"></line>
+                        <line x1="3" y1="18" x2="21" y2="18" id="line3"></line>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- -->
+        <section id="home" class="page-content active">
+            <div class="hero">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div class="hero-text reveal">
+                            <div class="eyebrow">Sector 3, București</div>
+                            <h1>Aici sănătatea lor este pe mâini bune.</h1>
+                            <p>Suntem o echipă de medici empatici dedicați îngrijirii prietenilor tăi necuvântători, chiar în inima cartierului tău.</p>
+                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                <button class="nav-cta" style="padding: 18px 36px; font-size: 1.05rem; display: inline-block;" onclick="navigateTo('programare')">Vreau o programare</button>
+                                <button style="background: transparent; color: var(--primary); font-weight: 600; padding: 18px 24px; border-bottom: 2px solid var(--accent); font-size: 1.05rem;" onclick="navigateTo('servicii')">Vezi servicii</button>
+                            </div>
+                            
+                            <div style="margin-top: 56px; display: flex; align-items: center; gap: 14px;">
+                                <div style="display: flex; color: #FFB800; font-size: 1.2rem;">★★★★★</div>
+                                <span style="font-weight: 600;">4.9/5 pe Google</span>
+                                <span style="color: var(--text-soft); font-size: 0.95rem;">(peste 450 de recenzii)</span>
+                            </div>
+                        </div>
+                        <div class="hero-visual reveal" style="transition-delay: 0.2s;">
+                            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800" alt="Câine fericit la veterinar" class="main-img">
+                            
+                            <div class="floating-card f-1">
+                                <div style="width: 44px; height: 44px; border-radius: 50%; background: #E8F1F2; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--primary)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--primary);">Programare confirmată</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-soft);">Azi la 16:30 • Max (Beagle)</div>
+                                </div>
+                            </div>
+
+                            <div class="floating-card f-2">
+                                <div style="font-weight: 700; font-size: 1.25rem; color: var(--accent);">+12,000</div>
+                                <div style="font-size: 0.8rem; color: var(--text-soft);">Cățeii & pisici tratați</div>
+                            </div>
+
+                            <div class="status-badge" id="live-status">
+                                <div class="status-dot"></div>
+                                <span id="status-text">Deschis acum</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="trust-bar">
+                <div class="container">
+                    <div class="trust-grid">
+                        <div class="trust-item">
+                            <h4>12+</h4>
+                            <p>Ani Experiență</p>
+                        </div>
+                        <div class="trust-item">
+                            <h4>24/7</h4>
+                            <p>Suport Urgențe</p>
+                        </div>
+                        <div class="trust-item">
+                            <h4>100%</h4>
+                            <p>Empatie Garantată</p>
+                        </div>
+                        <div class="trust-item">
+                            <h4>Sector 3</h4>
+                            <p>Proximitate Locală</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section-padding">
+                <div class="container">
+                    <div style="text-align: center; margin-bottom: 72px;" class="reveal">
+                        <h2 style="font-size: 2.8rem; color: var(--primary);">Servicii complete pentru blănoși</h2>
+                        <p style="color: var(--text-soft); max-width: 640px; margin: 24px auto 0; font-size: 1.15rem;">De la prevenție la intervenții chirurgicale complexe, folosim tehnologie de ultimă oră.</p>
+                    </div>
+                    <div class="service-grid">
+                        <div class="service-card reveal">
+                            <div class="service-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <h3>Vaccinare & Cipare</h3>
+                            <p>Protocoale de vaccinare personalizate și microcipare obligatorie pentru siguranța lor pe termen lung.</p>
+                            <div style="margin-top: 24px; font-weight: 700; color: var(--accent); font-size: 1.1rem;">De la 80 RON</div>
+                        </div>
+                        <div class="service-card reveal" style="transition-delay: 0.1s;">
+                            <div class="service-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="m9 12 5.5 5.5"></path><path d="m11.5 14.5L14 17"></path></svg>
+                            </div>
+                            <h3>Chirurgie Generală</h3>
+                            <p>Bloc operator sterilizat la standarde ridicate și monitorizare post-operatorie vigilentă.</p>
+                            <div style="margin-top: 24px; font-weight: 700; color: var(--accent); font-size: 1.1rem;">De la 350 RON</div>
+                        </div>
+                        <div class="service-card reveal" style="transition-delay: 0.2s;">
+                            <div class="service-icon">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="9" r="2"></circle><circle cx="15" cy="15" r="2"></circle><path d="M12 3a9 9 0 0 0-9 9"></path><path d="M3 12a9 9 0 0 0 9 9"></path><path d="M21 12a9 9 0 0 0-9-9"></path><path d="M12 21a9 9 0 0 0 9-9"></path></svg>
+                            </div>
+                            <h3>Analize Laborator</h3>
+                            <p>Diagnosticare rapidă și de înaltă acuratețe pentru probe de sânge, urină și microbiologie.</p>
+                            <div style="margin-top: 24px; font-weight: 700; color: var(--accent); font-size: 1.1rem;">De la 120 RON</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- -->
+        <section id="servicii" class="page-content">
+            <div class="section-padding">
+                <div class="container">
+                    <h2 class="display-font" style="font-size: 3rem; color: var(--primary); margin-bottom: 48px;">Listă Completă Servicii</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px;">
+                        <div>
+                            <h3 style="color: var(--accent); margin-bottom: 28px; font-size: 1.6rem;">Prevenție & Îngrijire</h3>
+                            <ul style="display: grid; gap: 20px;">
+                                <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(15, 76, 92, 0.2); padding-bottom: 8px;">
+                                    <span style="font-weight: 500;">Consultație generală</span>
+                                    <strong style="color: var(--primary);">150 RON</strong>
+                                </li>
+                                <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(15, 76, 92, 0.2); padding-bottom: 8px;">
+                                    <span style="font-weight: 500;">Deparazitare internă</span>
+                                    <strong style="color: var(--primary);">50 RON</strong>
+                                </li>
+                                <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(15, 76, 92, 0.2); padding-bottom: 8px;">
+                                    <span style="font-weight: 500;">Tăiere unghii</span>
+                                    <strong style="color: var(--primary);">30 RON</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--accent); margin-bottom: 28px; font-size: 1.6rem;">Diagnostic & Ecografie</h3>
+                            <ul style="display: grid; gap: 20px;">
+                                <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(15, 76, 92, 0.2); padding-bottom: 8px;">
+                                    <span style="font-weight: 500;">Ecografie Abdominală</span>
+                                    <strong style="color: var(--primary);">200 RON</strong>
+                                </li>
+                                <li style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(15, 76, 92, 0.2); padding-bottom: 8px;">
+                                    <span style="font-weight: 500;">Test Rapid Parvoviroză</span>
+                                    <strong style="color: var(--primary);">100 RON</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="echipa" class="page-content">
+            <div class="section-padding">
+                <div class="container">
+                    <h2 class="display-font" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;">Medicii noștri</h2>
+                    <p style="margin-bottom: 64px; color: var(--text-soft); font-size: 1.15rem;">Oameni care iubesc animalele la fel de mult ca tine.</p>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <img src="https://images.unsplash.com/photo-1559839734-2b71f1536783?auto=format&fit=crop&q=80&w=400" alt="Dr. Maria Ionescu" style="width: 100%; height: 320px; object-fit: cover; border-radius: 24px; margin-bottom: 24px;">
+                            <h3>Dr. Maria Ionescu</h3>
+                            <p style="color: var(--accent); font-weight: 600; margin-bottom: 12px; font-size: 1.1rem;">Chirurg Principal</p>
+                            <p>Peste 15 ani în chirurgia țesuturilor moi și o pasiune infinită pentru câinii seniori.</p>
+                        </div>
+                        <div class="service-card">
+                            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400" alt="Dr. Radu Stancu" style="width: 100%; height: 320px; object-fit: cover; border-radius: 24px; margin-bottom: 24px;">
+                            <h3>Dr. Radu Stancu</h3>
+                            <p style="color: var(--accent); font-weight: 600; margin-bottom: 12px; font-size: 1.1rem;">Medicină Internă</p>
+                            <p>Expert în diagnosticare ecografică de înaltă precizie și nutriție veterinară personalizată.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="faq" class="page-content">
+            <div class="section-padding">
+                <div class="container" style="max-width: 800px;">
+                    <h2 class="display-font" style="font-size: 3rem; color: var(--primary); margin-bottom: 48px; text-align: center;">Întrebări Frecvente</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-header">
+                                <span>Pot sta cu animalul meu în timpul consultației?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-content">
+                                <p>Da, încurajăm prezența stăpânului în cabinet pentru a reduce anxietatea animalului, cu excepția procedurilor chirurgicale sterile sau radiologice.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-header">
+                                <span>Trebuie să fac programare sau pot veni oricând?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-content">
+                                <p>Pentru consultații de rutină recomandăm ferm programarea prealabilă. Urgențele critice sunt preluate prioritar și imediat în timpul programului de funcționare.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-header">
+                                <span>Ce modalități de plată acceptați la cabinet?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-content">
+                                <p>Acceptăm plata rapidă cu cardul bancar, numerar (cash), dar și plăți securizate prin transfer bancar de pe telefon.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="programare" class="page-content">
+            <div class="section-padding">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div>
+                            <h2 class="display-font" style="font-size: 3rem; color: var(--primary);">Rezervă o vizită</h2>
+                            <p style="margin: 24px 0 48px; color: var(--text-soft); font-size: 1.15rem;">Vei primi un SMS de confirmare în maxim 30 de minute de la trimiterea cererii.</p>
+                            <div style="background: white; padding: 40px; border-radius: 24px; box-shadow: var(--shadow-subtle);">
+                                <h4 style="margin-bottom: 20px; color: var(--primary); font-size: 1.2rem;">De ce să te programezi?</h4>
+                                <ul style="display: grid; gap: 14px; font-size: 1rem; color: var(--text-soft);">
+                                    <li>✓ Fără timp de așteptare suplimentar în sală</li>
+                                    <li>✓ Medicul tău preferat disponibil pentru consultație</li>
+                                    <li>✓ Timp extins dedicat exclusiv analizării blănosului tău</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <form class="booking-form" id="bookForm">
+                            <div class="form-group">
+                                <label>Nume Stăpân</label>
+                                <input type="text" placeholder="Ex: Andrei Popescu" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefon Mobil</label>
+                                <input type="tel" placeholder="07xx xxx xxx" required>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group">
+                                    <label>Specie</label>
+                                    <select required>
+                                        <option value="caine">Câine</option>
+                                        <option value="pisica">Pisică</option>
+                                        <option value="altul">Altul</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Serviciu Dorit</label>
+                                    <select required>
+                                        <option value="cons">Consultație</option>
+                                        <option value="vacc">Vaccinare</option>
+                                        <option value="anal">Analize</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="nav-cta" style="margin-top: 20px; background: var(--accent); padding: 16px 32px; font-size: 1.05rem;">Trimite Cererea de Rezervare</button>
+                            <div id="formSuccess" style="display:none; color: #4CAF50; text-align: center; font-weight: 600; padding: 10px; background: rgba(76, 175, 80, 0.1); border-radius: 12px;">Cerere trimisă cu succes! Vă contactăm imediat pe telefon.</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="contact" class="page-content">
+            <div class="section-padding">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div>
+                            <h2 class="display-font" style="font-size: 3rem; color: var(--primary);">Ne găsești ușor</h2>
+                            <div style="margin-top: 48px; display: grid; gap: 36px;">
+                                <div>
+                                    <h4 style="color: var(--accent); font-size: 1.25rem; margin-bottom: 8px;">Adresă Cabinet</h4>
+                                    <p style="font-size: 1.1rem;">Strada Exemplului Nr. 42, Sector 3, București</p>
+                                    <p style="font-size: 0.95rem; color: var(--text-soft);">Repere: La doar 5 minute de stația de metrou Dristor</p>
+                                </div>
+                                <div>
+                                    <h4 style="color: var(--accent); font-size: 1.25rem; margin-bottom: 8px;">Program de Lucru</h4>
+                                    <p style="font-size: 1.1rem;">Luni - Vineri: 09:00 - 20:00</p>
+                                    <p style="font-size: 1.1rem;">Sâmbătă: 10:00 - 16:00</p>
+                                    <p style="font-size: 1.1rem; color: var(--emergency); font-weight: 600;">Duminică: Doar Urgențe</p>
+                                </div>
+                                <div>
+                                    <h4 style="color: var(--accent); font-size: 1.25rem; margin-bottom: 8px;">Contact Direct</h4>
+                                    <p style="font-size: 1.1rem;">Telefon: 0722 000 000</p>
+                                    <p style="font-size: 1.1rem;">Email: contact@aristivet.ro</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: #e0ddd8; border-radius: 40px; min-height: 450px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 48px; box-shadow: var(--shadow-subtle);">
+                            <div>
+                                <svg width="56" height="56" viewBox="0 0 24 24" fill="var(--primary)" style="margin-bottom: 24px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                <h3 style="color: var(--primary); margin-bottom: 12px;">Harta interactivă locală</h3>
+                                <p style="color: var(--text-soft);">Sectiunea va integra widgetul de Google Maps optimizat pentru mobil</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section id="urgenta" class="page-content">
+            <div class="emergency-hero">
+                <div class="container">
+                    <h1>Urgență Veterinară?</h1>
+                    <p style="font-size: 1.6rem; opacity: 0.95;">Suntem aici când este cel mai greu. Sunați urgent:</p>
+                    <a href="tel:0722000000" class="phone-pulse">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                        0722 000 000
+                    </a>
+                </div>
+            </div>
+            <div class="section-padding" style="background: white;">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div style="background: #FFF5F5; padding: 48px; border-radius: 32px;">
+                            <h3 style="color: var(--emergency); margin-bottom: 24px; font-size: 1.5rem;">Când este considerat caz critic?</h3>
+                            <ul style="display: grid; gap: 18px; color: var(--text-ink); font-weight: 500; font-size: 1.05rem;">
+                                <li>• Dificultăți acute de respirație</li>
+                                <li>• Ingestie suspectată de toxine sau corp străin</li>
+                                <li>• Traume fizice severe sau sângerări</li>
+                                <li>• Letargie bruscă extremă sau convulsii</li>
+                                <li>• Incapacitatea acută de urinare</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h2 class="display-font" style="color: var(--primary); font-size: 2.6rem;">Protocol rapid de triaj</h2>
+                            <p style="margin: 24px 0; color: var(--text-soft); font-size: 1.15rem; line-height: 1.7;">Echipa noastră medicală este antrenată pentru intervenții imediate de stabilizare vitală și diagnostic în regim alert. Sună-ne direct în timp ce te afli în drum spre noi pentru a avea sala sterilă și gata pregătită.</p>
+                            <div style="border-left: 4px solid var(--accent); padding-left: 24px; font-style: italic; color: var(--text-soft); font-size: 1.1rem; line-height: 1.6;">
+                                "Echipa a intervenit impecabil în câteva secunde când pisica mea avea probleme acute respiratorii. Sunt etern recunoscător." — Andrei V., Client din Dristor
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <span class="footer-logo">AristiVet</span>
+                    <p style="opacity: 0.8; font-size: 1.05rem;">Sănătate și fericire pentru membrii blănoși ai familiei tale. Tehnologie modernă, inimă mare.</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 24px; font-size: 1.25rem;">Navigare Rapidă</h4>
+                    <ul style="display: grid; gap: 12px; opacity: 0.85;">
+                        <li><a href="#" onclick="navigateTo('servicii'); return false;">Servicii Prețuri</a></li>
+                        <li><a href="#" onclick="navigateTo('echipa'); return false;">Echipa Noastră</a></li>
+                        <li><a href="#" onclick="navigateTo('contact'); return false;">Locație & Program</a></li>
+                        <li><a href="#" onclick="navigateTo('urgenta'); return false;">Urgențe Medicale</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 24px; font-size: 1.25rem;">Urmărește-ne online</h4>
+                    <div style="display: flex; gap: 16px;">
+                        <a href="#" style="width: 44px; height: 44px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: var(--transition-smooth);" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">FB</a>
+                        <a href="#" style="width: 44px; height: 44px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; transition: var(--transition-smooth);" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 32px; text-align: center; font-size: 0.9rem; opacity: 0.7;">
+                © 2026 AristiVet Sector 3 București. Toate drepturile rezervate. Creat pentru demo comercial.
+            </div>
+        </div>
+    </footer>
+
+    <!-- -->
+    <script>
+        // SPA NAVIGATION LOGIC
+        function navigateTo(pageId) {
+            // Ascundem toate paginile
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            
+            // Afișăm pagina curentă
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }
+
+            // Actualizăm starea tab-urilor/link-urilor de navigare active
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            const activeLinks = Array.from(document.querySelectorAll('.nav-links a')).filter(a => {
+                const text = a.textContent.toLowerCase();
+                if (pageId === 'home' && text.includes('acasă')) return true;
+                if (pageId === 'faq' && text.includes('întrebări')) return true;
+                return text.includes(pageId);
+            });
+            activeLinks.forEach(link => link.classList.add('active'));
+
+            // Închidem meniul mobil automat la navigare
+            const navLinks = document.getElementById('navLinks');
+            const mobileToggle = document.getElementById('mobileToggle');
+            if (navLinks.classList.contains('mobile-open')) {
+                toggleMobileMenu();
+            }
+        }
+
+        // MOBILE MENU TOGGLE LOGIC
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+
+        function toggleMobileMenu() {
+            navLinks.classList.toggle('mobile-open');
+            
+            // Animatie iconita hamburger (transformare in X)
+            if (navLinks.classList.contains('mobile-open')) {
+                line1.setAttribute('transform', 'translate(9, -3) rotate(45 3 6)');
+                line2.style.opacity = '0';
+                line3.setAttribute('transform', 'translate(9, 3) rotate(-45 3 18)');
+            } else {
+                line1.setAttribute('transform', 'none');
+                line2.style.opacity = '1';
+                line3.setAttribute('transform', 'none');
+            }
+        }
+
+        mobileToggle.addEventListener('click', toggleMobileMenu);
+
+        // LIVE STATUS CALCULATOR (Calculare in timp real daca e deschis cabinetul)
+        function updateStatus() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Duminica, 6 = Sambata
+            const hour = now.getHours();
+            
+            const statusBadge = document.getElementById('live-status');
+            const statusDot = statusBadge.querySelector('.status-dot');
+            const statusText = document.getElementById('status-text');
+
+            let isOpen = false;
+
+            if (day >= 1 && day <= 5) { // Luni - Vineri: 09:00 - 20:00
+                if (hour >= 9 && hour < 20) isOpen = true;
+            } else if (day === 6) { // Sambata: 10:00 - 16:00
+                if (hour >= 10 && hour < 16) isOpen = true;
+            }
+
+            if (isOpen) {
+                statusDot.style.background = '#4CAF50';
+                statusText.innerText = "Deschis acum";
+            } else {
+                statusDot.style.background = '#D90429';
+                statusText.innerText = "Închis • Doar Urgențe";
+            }
+        }
+
+        // ACCORDION INTERACTION (FAQ)
+        document.querySelectorAll('.faq-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // REVEAL ON SCROLL ANIMATION LOGIC
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // FORM VALIDATION (Mock submit)
+        document.getElementById('bookForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const success = document.getElementById('formSuccess');
+            
+            btn.innerText = "Se trimite...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.style.display = 'none';
+                success.style.display = 'block';
+            }, 1200);
+        });
+
+        // INITIALIZARE
+        window.onload = () => {
+            updateStatus();
+            setInterval(updateStatus, 60000); // Re-verificare status la fiecare minut
+        };
+    </script>
+</body>
+</html>
